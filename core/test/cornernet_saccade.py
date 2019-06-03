@@ -187,6 +187,11 @@ def get_locs(db, nnet, image, im_mean, im_std, att_scales, thresh, sizes, ref_de
         ref_locations  = get_ref_locs(dets)
         next_locations = np.concatenate((next_locations, ref_locations), axis=0)
         next_locations = location_nms(next_locations, thresh=16)
+    # print(dets)
+    # print('*********')
+    # print(next_locations)
+    # print('*********')
+    # print(atts)
     return dets, next_locations, atts
 
 def location_nms(locations, thresh=15):
@@ -290,6 +295,8 @@ def cornernet_saccade(db, nnet, result_dir, debug=False, decode_func=batch_decod
 
 def cornernet_saccade_inference(db, nnet, image, decode_func=batch_decode): 
     init_sizes  = db.configs["init_sizes"]
+    # print("init size".center(100, '*'))
+    # print(init_sizes)
     ref_dets    = db.configs["ref_dets"]
 
     att_thresholds = db.configs["att_thresholds"]
@@ -314,8 +321,10 @@ def cornernet_saccade_inference(db, nnet, image, decode_func=batch_decode):
     height, width = image.shape[0:2]
 
     image = image / 255.
+    # print(image.shape)
     image = image.transpose((2, 0, 1)).copy()
     image = torch.from_numpy(image).cuda(non_blocking=True)
+    # print(image.size())
 
     dets, locations, atts = get_locs(
         db, nnet, image, im_mean, im_std, 
