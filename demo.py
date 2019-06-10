@@ -17,7 +17,7 @@ detector2 = CornerNet_Squeeze()
 
 ####
 start = time.time()
-image    = cv2.imread("moto.jpg")
+image    = cv2.imread("demo.jpg")
 
 # bboxes = detector(image)
 # bboxes1 = detector1(image)
